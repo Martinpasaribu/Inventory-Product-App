@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { ToastProvider } from "@/context/ToastContext";
+import CustomTour from "@/components/CustomTour";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,7 +30,7 @@ export default function RootLayout({
       <body className="antialiased">
         <ThemeProvider>
           <ToastProvider>
-
+          <CustomTour />
           {children}
           
           </ToastProvider>

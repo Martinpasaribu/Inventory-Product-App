@@ -24,7 +24,7 @@ export default function InventoryManager({ categories }: { categories: any[] }) 
         className="flex items-center gap-2 px-5 py-2.5 bg-primary text-primary-foreground rounded-xl font-bold hover:shadow-lg hover:shadow-primary/20 transition-all active:scale-95"
       >
         <Plus size={18} strokeWidth={3} />
-        Manage Inventory
+         Inventaris
       </button>
 
       <Modal

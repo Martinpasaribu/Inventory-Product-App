@@ -5,6 +5,7 @@ import { useState } from "react";
 import { addProduct } from "@/lib/actions/inventory";
 import { Package, Loader2, Tag, List, ChevronDown, Layers } from "lucide-react";
 import { useToast } from "@/context/ToastContext"; 
+import CustomTour from "./CustomTour";
 
 // Daftar satuan sesuai permintaan
 const UNITS = [
@@ -12,6 +13,12 @@ const UNITS = [
   "dus", "box", "kaleng", "botol", "tube", "sachet", "strip", 
   "bungkus", "kantong", "karung", "tong", "drum", "pallet"
 ];
+
+const modalSteps = [
+  { target: ".tour-modal-name", title: "Nama", content: "Masukkan nama barang..." },
+  { target: ".tour-modal-unit", title: "Satuan", content: "Pilih satuan..." },
+];
+
 
 export default function AddProductForm({ 
   categories, 
@@ -55,15 +62,17 @@ export default function AddProductForm({
 
   return (
     <form action={handleSubmit} className="space-y-5 pt-2">
+      <CustomTour steps={modalSteps} tourKey="add-product-modal" />
+      
       {/* Input Nama Barang */}
-      <div className="space-y-2">
+      <div className=" space-y-2">
         <label className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground flex items-center gap-2 px-1">
           <Tag size={12} className="text-primary" /> Nama Barang
         </label>
         <input 
           name="name" 
           placeholder="Contoh: Kabel UTP Cat6" 
-          className="w-full p-4 rounded-2xl border border-border bg-muted/20 focus:bg-background focus:ring-4 focus:ring-primary/10 outline-none transition-all font-semibold" 
+          className="tour-modal-name w-full p-4 rounded-2xl border border-border bg-muted/20 focus:bg-background focus:ring-4 focus:ring-primary/10 outline-none transition-all font-semibold" 
           required 
           disabled={isPending}
         />
@@ -92,11 +101,11 @@ export default function AddProductForm({
         </div>
 
         {/* Input Satuan (Unit) */}
-        <div className="space-y-2">
+        <div className="tour-modal-unit space-y-2">
           <label className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground flex items-center gap-2 px-1">
             <Layers size={12} className="text-primary" /> Satuan
           </label>
-          <div className="relative">
+          <div className="relative ">
             <select 
               name="unit" 
               className="w-full p-4 rounded-2xl border border-border bg-muted/20 focus:bg-background focus:ring-4 focus:ring-primary/10 outline-none transition-all font-semibold appearance-none cursor-pointer capitalize" 
@@ -144,3 +153,20 @@ export default function AddProductForm({
     </form>
   );
 }
+
+
+    // { target: ".tour-stats", title: "Ringkasan Gudang", content: "Pantau total SKU dan stok fisik secara real-time di sini." },
+    // { target: ".tour-stock-sku", title: "Monitor SKU", content: "Jumlah variasi produk yang tersedia." },
+    // { target: ".tour-stock-physic", title: "Stok Fisik", content: "Total seluruh jumlah item fisik di gudang." },
+    // { target: ".tour-stock-alert", title: "Restock Alert", content: "Item yang memiliki stok sedikit dan perlu perhatian." },
+    // { target: ".tour-search", title: "Pencarian Cepat", content: "Cari produk apapun berdasarkan nama secara instan." },
+    // { target: ".tour-add-product", title: "Tambah Inventaris", content: "Klik tombol ini untuk mendaftarkan barang baru. Setelah klik, tunggu hingga modal muncul." },
+    // { target: ".tour-adjust-stock", title: "Update Stok", content: "Gunakan icon plus/minus di tabel untuk update stok cepat." },
+
+    // // ini untuk modal add category
+    // { target: ".tour-add-product", title: "Tambah Inventaris", content: "Klik tombol ini untuk mendaftarkan barang baru. Setelah klik, tunggu hingga modal muncul." },
+    // { target: ".tour-adjust-stock", title: "Update Stok", content: "Gunakan icon plus/minus di tabel untuk update stok cepat." },
+
+    // // ini untuk modal  add product
+    // { target: ".tour-modal-name", title: "Input Nama", content: "Masukkan nama barang baru di kolom ini dalam modal." },
+    // { target: ".tour-modal-unit", title: "Pilih Satuan", content: "Tentukan satuan barang (Pcs, Box, dll)." },
