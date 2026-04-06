@@ -24,6 +24,7 @@ const adminSteps = [
   { target: ".tour-search", title: "Pencarian Cepat", content: "Cari produk apapun berdasarkan nama secara instan." },
   { target: ".tour-add-product", title: "Tambah Inventaris", content: "Klik tombol ini untuk mendaftarkan barang atau kategoru baru." },
   { target: ".tour-adjust-stock", title: "Update Stok", content: "Gunakan icon plus/minus di tabel untuk update stok cepat." },
+  { target: ".tour-del-product", title: "Hapus Produk", content: "Tekan hapus produk jika ingin menghapus data product." },
 ];
 
 export default async function Home({ searchParams }: HomeProps) {
@@ -124,94 +125,94 @@ export default async function Home({ searchParams }: HomeProps) {
           </div>
         </div>
 
-{/* DATA TABLE & MOBILE CARDS SECTION */}
-<div className="rounded-[2rem] md:border border-border md:bg-card md:shadow-sm overflow-hidden">
-  {/* Desktop Table - Hidden on Mobile */}
-  <div className="hidden md:block overflow-x-auto">
-    <table className="w-full text-left border-collapse">
-      <thead className="bg-muted/40 text-muted-foreground uppercase text-[10px] tracking-widest font-black">
-        <tr>
-          <th className="p-6 border-b border-border">Product Details</th>
-          <th className="p-6 border-b border-border text-center">Category</th>
-          <th className="p-6 border-b border-border text-center">Inventory Adjust</th>
-          <th className="p-6 border-b border-border text-right">Actions</th>
-        </tr>
-      </thead>
-      <tbody className="divide-y divide-border">
-        {products.map((p: any, index: number) => (
-          <tr key={p._id.toString()} className="group hover:bg-muted/5 transition-all">
-            <td className="p-6 lg:p-8">
-              <div className="flex flex-col">
-                <span className="font-bold text-lg lg:text-xl text-foreground tracking-tight group-hover:text-primary transition-colors italic">
-                  {p.name}
-                </span>
-                <span className="text-[9px] text-muted-foreground font-bold uppercase mt-1">
-                  ID: {p._id.toString().slice(-6)}
-                </span>
-              </div>
-            </td>
-            <td className="p-6 text-center">
-              <span className="inline-flex items-center px-3 py-1 rounded-full bg-secondary text-secondary-foreground text-[10px] font-black uppercase tracking-widest border border-border">
-                {p.categoryId?.name || "Uncategorized"}
-              </span>
-            </td>
-            <td className="p-6">
-              <div className="flex flex-col items-center gap-2">
-                <div className={index === 0 ? "tour-adjust-stock" : ""}>
-                  <StockAdjuster product={JSON.parse(JSON.stringify(p))} />
+        {/* DATA TABLE & MOBILE CARDS SECTION */}
+        <div className="rounded-[2rem] md:border border-border md:bg-card md:shadow-sm overflow-hidden">
+          {/* Desktop Table - Hidden on Mobile */}
+          <div className="hidden md:block overflow-x-auto">
+            <table className="w-full text-left border-collapse">
+              <thead className="bg-muted/40 text-muted-foreground uppercase text-[10px] tracking-widest font-black">
+                <tr>
+                  <th className="p-6 border-b border-border">Product Details</th>
+                  <th className="p-6 border-b border-border text-center">Category</th>
+                  <th className="p-6 border-b border-border text-center">Inventory Adjust</th>
+                  <th className="p-6 border-b border-border text-right">Actions</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-border">
+                {products.map((p: any, index: number) => (
+                  <tr key={p._id.toString()} className="group hover:bg-muted/5 transition-all">
+                    <td className="p-6 lg:p-8">
+                      <div className="flex flex-col">
+                        <span className="font-bold text-lg lg:text-xl text-foreground tracking-tight group-hover:text-primary transition-colors italic">
+                          {p.name}
+                        </span>
+                        <span className="text-[9px] text-muted-foreground font-bold uppercase mt-1">
+                          ID: {p._id.toString().slice(-6)}
+                        </span>
+                      </div>
+                    </td>
+                    <td className="p-6 text-center">
+                      <span className="inline-flex items-center px-3 py-1 rounded-full bg-secondary text-secondary-foreground text-[10px] font-black uppercase tracking-widest border border-border">
+                        {p.categoryId?.name || "Uncategorized"}
+                      </span>
+                    </td>
+                    <td className="p-6">
+                      <div className="flex flex-col items-center gap-2">
+                        <div className={index === 0 ? "tour-adjust-stock" : ""}>
+                          <StockAdjuster product={JSON.parse(JSON.stringify(p))} />
+                        </div>
+                        <span className="text-[10px] font-black uppercase text-muted-foreground/60">{p.unit || "pcs"}</span>
+                      </div>
+                    </td>
+                    <td className="tour-del-product p-6 text-right">
+                      <DeleteProduct productId={p._id.toString()} productName={p.name} />
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          {/* Mobile Card List - Hidden on Desktop */}
+          <div className="md:hidden space-y-4">
+            {products.length > 0 ? (
+              products.map((p: any, index: number) => (
+                <div key={p._id.toString()} className="bg-card border border-border rounded-3xl p-5 shadow-sm space-y-4">
+                  {/* Top Row: Title & Category */}
+                  <div className="flex justify-between items-start gap-4">
+                    <div className="flex flex-col">
+                      <h3 className="font-bold text-lg text-foreground italic leading-tight">{p.name}</h3>
+                      <span className="text-[10px] text-muted-foreground font-medium uppercase tracking-tighter">ID: {p._id.toString().slice(-6)}</span>
+                    </div>
+                    <span className="shrink-0 px-3 py-1 rounded-full bg-secondary text-[9px] font-black uppercase tracking-widest border border-border">
+                      {p.categoryId?.name || "Uncategorized"}
+                    </span>
+                  </div>
+
+                  {/* Middle Row: Stock Control */}
+                  <div className="flex items-center justify-between bg-muted/30 p-3 rounded-2xl">
+                    <div className="flex flex-col">
+                      <span className="text-[10px] font-black uppercase text-muted-foreground">Adjust Stock</span>
+                      <span className="text-[10px] font-bold text-primary">{p.unit || "pcs"}</span>
+                    </div>
+                    <div className={index === 0 ? "tour-adjust-stock" : ""}>
+                      <StockAdjuster product={JSON.parse(JSON.stringify(p))} />
+                    </div>
+                  </div>
+
+                  {/* Bottom Row: Actions */}
+                  <div className="flex justify-end pt-2 border-t border-border/50">
+                    <DeleteProduct productId={p._id.toString()} productName={p.name} />
+                  </div>
                 </div>
-                <span className="text-[10px] font-black uppercase text-muted-foreground/60">{p.unit || "pcs"}</span>
+              ))
+            ) : (
+              <div className="text-center py-20 bg-card rounded-3xl border border-dashed border-border">
+                <p className="text-muted-foreground font-bold italic">No items found.</p>
               </div>
-            </td>
-            <td className="p-6 text-right">
-              <DeleteProduct productId={p._id.toString()} productName={p.name} />
-            </td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
-  </div>
-
-  {/* Mobile Card List - Hidden on Desktop */}
-  <div className="md:hidden space-y-4">
-    {products.length > 0 ? (
-      products.map((p: any, index: number) => (
-        <div key={p._id.toString()} className="bg-card border border-border rounded-3xl p-5 shadow-sm space-y-4">
-          {/* Top Row: Title & Category */}
-          <div className="flex justify-between items-start gap-4">
-            <div className="flex flex-col">
-              <h3 className="font-bold text-lg text-foreground italic leading-tight">{p.name}</h3>
-              <span className="text-[10px] text-muted-foreground font-medium uppercase tracking-tighter">ID: {p._id.toString().slice(-6)}</span>
-            </div>
-            <span className="shrink-0 px-3 py-1 rounded-full bg-secondary text-[9px] font-black uppercase tracking-widest border border-border">
-              {p.categoryId?.name || "Uncategorized"}
-            </span>
-          </div>
-
-          {/* Middle Row: Stock Control */}
-          <div className="flex items-center justify-between bg-muted/30 p-3 rounded-2xl">
-            <div className="flex flex-col">
-              <span className="text-[10px] font-black uppercase text-muted-foreground">Adjust Stock</span>
-              <span className="text-[10px] font-bold text-primary">{p.unit || "pcs"}</span>
-            </div>
-            <div className={index === 0 ? "tour-adjust-stock" : ""}>
-              <StockAdjuster product={JSON.parse(JSON.stringify(p))} />
-            </div>
-          </div>
-
-          {/* Bottom Row: Actions */}
-          <div className="flex justify-end pt-2 border-t border-border/50">
-            <DeleteProduct productId={p._id.toString()} productName={p.name} />
+            )}
           </div>
         </div>
-      ))
-    ) : (
-      <div className="text-center py-20 bg-card rounded-3xl border border-dashed border-border">
-        <p className="text-muted-foreground font-bold italic">No items found.</p>
-      </div>
-    )}
-  </div>
-</div>
 
         {/* FOOTER */}
         <div className="flex flex-col sm:flex-row justify-between items-center gap-4 pt-4 pb-10">

@@ -62,7 +62,7 @@ export default function AddProductForm({
 
   return (
     <form action={handleSubmit} className="space-y-5 pt-2">
-      <CustomTour steps={modalSteps} tourKey="add-product-modal" />
+      {/* <CustomTour steps={modalSteps} tourKey="add-product-modal" /> */}
       
       {/* Input Nama Barang */}
       <div className=" space-y-2">
