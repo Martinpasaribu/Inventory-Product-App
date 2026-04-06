@@ -30,7 +30,7 @@ export default function RootLayout({
       <body className="antialiased">
         <ThemeProvider>
           <ToastProvider>
-          <CustomTour />
+          {/* <CustomTour /> */}
           {children}
           
           </ToastProvider>
