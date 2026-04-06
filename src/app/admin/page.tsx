@@ -49,8 +49,8 @@ export default async function Home({ searchParams }: HomeProps) {
       {/* HEADER SECTION - Responsive Flex */}
       <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 mb-10">
         <div className="space-y-1">
-          <h1 className="flex items-center gap-3 text-4xl md:text-5xl font-black tracking-tighter text-primary">
-            <Box size={40} strokeWidth={2.5} className="text-primary" /> MY-INV
+          <h1 className="flex items-center gap-3 text-4xl md:text-4xl font-black tracking-tighter text-primary">
+            <Box size={40} strokeWidth={2.5} className="text-primary" /> MY-INVENTORY
           </h1>
           <p className="text-muted-foreground text-sm md:text-base font-medium">
             Control center for your warehouse and logistics activity.
