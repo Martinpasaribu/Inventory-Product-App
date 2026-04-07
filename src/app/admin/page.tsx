@@ -11,6 +11,7 @@ import LowStockModal from "@/components/LowStockModal";
 import LogoutButton from "@/components/LogoutButton";
 import CustomTour from "@/components/CustomTour";
 import TourResetButton from "@/components/TourResetButton";
+import ExportButtons from "@/components/ExportButtons";
 
 interface HomeProps {
   searchParams: Promise<{ q?: string; cat?: string }>;
@@ -22,6 +23,7 @@ const adminSteps = [
   { target: ".tour-stock-physic", title: "Stok Fisik", content: "Total seluruh jumlah item fisik di gudang." },
   { target: ".tour-stock-alert", title: "Restock Alert", content: "Item yang memiliki stok sedikit dan perlu perhatian." },
   { target: ".tour-search", title: "Pencarian Cepat", content: "Cari produk apapun berdasarkan nama secara instan." },
+  { target: ".tour-export", title: "Ekspor Data", content: "Klik tombol ini untuk mengekspor data inventaris ke format Excel atau PDF." },
   { target: ".tour-add-product", title: "Tambah Inventaris", content: "Klik tombol ini untuk mendaftarkan barang atau kategoru baru." },
   { target: ".tour-adjust-stock", title: "Update Stok", content: "Gunakan icon plus/minus di tabel untuk update stok cepat." },
   { target: ".tour-del-product", title: "Hapus Produk", content: "Tekan hapus produk jika ingin menghapus data product." },
@@ -119,6 +121,12 @@ export default async function Home({ searchParams }: HomeProps) {
             />
             <button className="absolute right-2 top-2 bottom-2 px-4 bg-primary text-primary-foreground rounded-xl text-xs font-bold">Cari</button>
           </form>
+
+          {/* TOMBOL EXPORT BARU DI SINI */}
+          <div className="tour-export">
+
+            <ExportButtons data={JSON.parse(JSON.stringify(products))} />
+          </div>
 
           <div className="tour-add-product w-full md:w-auto">
             <InventoryManager categories={JSON.parse(JSON.stringify(categories))} />
